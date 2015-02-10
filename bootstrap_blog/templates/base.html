@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>Blog</title>
+		{% load bootstrap_themes %}
+		{% bootstrap_styles theme='cosmo' type='css' %}
+	</head>
+	<body>
+		{% include '_header.html' %} 
+
+		{% block content %} {% endblock %}
+
+		{% include '_footer.html' %}
+
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	{% bootstrap_script use_min=True %} 
+	<script>
+		{% for post in page %}
+		    $('#lnkPanel{{post.id}}').click(function(e) {
+			    e.preventDefault();
+			    window.location = '/bootstrap_blog/posts/{{post.id}}';
+		    });
+		    $('#lnkPanel{{post.id}}').hover(function(){
+		    	$(this).fadeTo('fast',.3);
+		    },function(){
+		    	$(this).fadeTo('fast',1);
+		    });
+		{% endfor %}
+	</script>
+	</body>
+</html>

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+		<!--　メインコンテンツ --> 
+		<div class="container">
+			<div class="page-header" id="banner">
+				<div class="row">
+					<div class="col-lg-9">
+
+						<div class="page-header">
+							<h1 id="tables">Posts</h1>
+						</div>
+
+						<div class="bs-component">
+						    {% for post in page %}
+						        {% for cls in class_ary %}
+						            {% if forloop.counter == forloop.parentloop.counter %}
+						                <div class="{{cls}}" id="lnkPanel{{post.id}}">
+						                	<div class="panel-heading">
+						                		<h3 class="panel-title">{{post.title}}</h3>
+						                	</div>
+						                	<div class="panel-body">
+						                		{{post.body}}
+						                	</div>
+						                </div>
+						            {% endif %}
+						        {% endfor %}
+						    {% endfor %}
+						</div>
+
+						<ul class="pagination">
+
+							<!-- left  -->
+							{% if get_page == 1 %}
+							    <li class="disabled">
+							{% else %}
+							    <li>
+							{% endif %}
+							<a href="/bootstrap_blog/?page=1">&laquo;</a></li>
+
+							<!-- paginate -->
+							{% for page_num in paginator.page_range %}
+							    {% if page_num == get_page %}
+							        <li class="active">
+							    {% else %}
+							        <li>
+							    {% endif %}
+							    <a href="/bootstrap_blog/?page={{page_num}}">{{page_num}}</a></li>
+							{% endfor %}
+
+							<!-- right -->
+							{% if get_page == paginator.num_pages %}
+							    <li class="disabled">
+							{% else %}
+							    <li>
+							{% endif %}
+							<a href="/bootstrap_blog/?page={{paginator.num_pages}}">&raquo;</a></li>
+
+						</ul>
+					</div>
+
+					<div class="col-lg-3">
+						<div class="page-header">
+							<h2>Tags</h2>
+						</div>
+						<div class="bs-component">
+							<ul class="list-group">
+								{% for tag in tags %}
+								    <a href="/bootstrap_blog/tags/{{tag.id}}" class="list-group-item">
+								    	<span class="badge">{{tag.id}}</span>
+								    	{{tag.name}}
+								    </a>
+								{% endfor %}
+							</ul>
+						</div>
+
+						<div class="page-header">
+							<h2>Users</h2>
+						</div>
+						<div class="bs-component">
+							<ul class="list-group">
+								{% for user in users %}
+								    <a href="/bootstrap_blog/users/{{user.id}}" class="list-group-item">
+								    	<span class="badge">{{user.id}}</span>
+								    	{{user.name}}
+								    </a>
+								{% endfor %}
+							</ul>
+						</div>
+					</div> 
+
+
+				</div>
+			</div>
+		</div>
+{% endblock %}

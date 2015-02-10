@@ -1,0 +1,22 @@
+web:
+  build: .
+  environment:
+    MYSQL_HOST: db
+    MYSQL_USER: root
+    MYSQL_PASSWORD: pass0000
+  command: /bin/sh -c "python manage.py migrate && python manage.py createsuperuser && python manage.py loaddata bootstrap_blog/fixture/initial_data.json && python manage.py runserver 0.0.0.0:8000"
+  volumes:
+    - .:/code
+  working_dir: /code
+  ports:
+    - "18000:8000"
+  links:
+    - db
+
+db:
+  image: mysql:latest
+  ports:
+    - "13306:3306"
+  environment:
+    MYSQL_DATABASE: mysite
+    MYSQL_ROOT_PASSWORD: pass0000
